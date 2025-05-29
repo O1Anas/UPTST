@@ -1,4 +1,4 @@
-# UPTST (Universal Prayer Times Statistics Tool)
+# UPTST (Ultimate Prayer Times Statistics Tool)
 
 A web-based tool for analyzing and visualizing prayer times data across different locations and calculation methods.
 
