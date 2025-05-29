@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UPTST</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="chart.js"></script>
+  <link rel="icon" href="icon.png" type="image/png">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="icon.png" alt="Icon" class="header-icon">
+      <h1>UPTST</h1>
+      <button id="downloadBtn" class="download-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download stats
+      </button>
+    </div>
+
+    <div class="controls-container">
+      <div class="address-row">
+        <div class="address-container">
+          <input type="text" id="address" placeholder="Address..." autocomplete="off">
+          <ul id="addressSuggestions" class="address-suggestions"></ul>
+          <div id="locationDropdown" class="location-dropdown"></div>
+        </div>
+      </div>
+
+      <div class="coords-row">
+        <label for="gpsBtn">Or:</label>
+        <button id="gpsBtn" class="gps-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+        </button>
+        <input type="number" id="latitude" step="0.000001" min="-90" max="90" placeholder="Latitude">
+        <label>&</label>
+        <input type="number" id="longitude" step="0.000001" min="-180" max="180" placeholder="Longitude">
+      </div>
+
+      <div class="year-to-calc-row">
+        <div class="year-row"><!-- year-row -->
+          <label for="year">, Year:</label>
+          <input type="number" id="year" step="1">
+          <select id="yearType" class="select-year">
+            <option value="0">Gregorian</option>
+            <option value="1">Hijri</option>
+          </select>
+        </div>
+        
+        <div class="method-calc-row">
+          <label for="calculationMethod">, Method:</label>
+          <select id="calculationMethod" class="select-method">
+            <option value="auto">Automatic</option>
+            <option value="1">Karachi</option>
+            <option value="2">North America (ISNA)</option>
+            <option value="3">Muslim World League</option>
+            <option value="4">Makkah</option>
+            <option value="5">Egypt</option>
+            <option value="7">Tehran</option>
+            <option value="8">Gulf Region</option>
+            <option value="9">Kuwait</option>
+            <option value="10">Qatar</option>
+            <option value="11">Singapore</option>
+            <option value="12">France</option>
+            <option value="13">Turkey</option>
+            <option value="14">Russia</option>
+            <option value="15">Moonsighting.com</option>
+            <option value="16">Dubai</option>
+            <option value="17">Malaysia (JAKIM)</option>
+            <option value="18">Tunisia</option>
+            <option value="19">Algeria</option>
+            <option value="20">Indonesia</option>
+            <option value="21">Morocco</option>
+            <option value="22">Lisbon, Portugal</option>
+            <option value="23">Jordan</option>
+          </select>
+          <button id="calculateBtn" class="calc-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="-16 -16 400 400" fill="currentColor"
+              stroke="currentColor" stroke-width="14">
+              <path
+                d="M328 16H40C18 16 0 34 0 56v256c0 22 18 40 40 40h288c22 0 40-18 40-40V56c0-22-18-40-40-40zM352 312c0 13-11 24-24 24H40c-13 0-24-11-24-24V56c0-13 11-24 24-24h288c13 0 24 11 24 24v256z" />
+              <path d="M144 112h-32V80a8 8 0 0 0-16 0v32H64a8 8 0 0 0 0 16h32v32a8 8 0 0 0 16 0v-32h32a8 8 0 0 0 0-16z" />
+              <path d="M296 112h-80a8 8 0 0 0 0 16h80a8 8 0 0 0 0-16z" />
+              <path
+                d="M137.6 214a8 8 0 0 0-11.2 0L104 236.8 81.6 214a8 8 0 0 0-11.2 11.2L93.2 248 70.4 270.8a8 8 0 0 0 11.2 11.2L104 259.2l22.4 22.8a8 8 0 0 0 11.2-11.2L115.2 248l22.8-22.8a8 8 0 0 0-0.4-11.2z" />
+              <path d="M296 208h-80a8 8 0 0 0 0 16h80a8 8 0 0 0 0-16z" />
+              <path d="M296 256h-80a8 8 0 0 0 0 16h80a8 8 0 0 0 0-16z" />
+            </svg>
+            <span>Calculate</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="errorContainer" class="error-container" style="display: none;"></div>
+
+  <div id="statsContainer" class="stats-container" style="display: none;">
+    <div class="content-wrapper">
+      <div class="stats-column">
+        <div class="tabs-container">
+          <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('prayerStats')">Extremes</button>
+            <button class="tab-btn" onclick="showTab('intervalStats')">Intervals</button>
+            <button class="tab-btn" onclick="showTab('fastingStats')">Fasting</button>
+          </div>
+          <div class="tab-content" id="prayerStats"></div>
+          <div class="tab-content hidden" id="intervalStats"></div>
+          <div class="tab-content hidden" id="fastingStats"></div>
+        </div>
+      </div>
+      <div class="chart-column">
+        <div class="chart-container card">
+          <div class="chart-wrapper">
+            <canvas id="prayerChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/luxon@3.6.0/build/global/luxon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/simple-statistics@7.8.8/dist/simple-statistics.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.2.0/chartjs-plugin-zoom.min.js" integrity="sha512-FRGbE3pigbYamZnw4+uT4t63+QJOfg4MXSgzPn2t8AWg9ofmFvZ/0Z37ZpCawjfXLBSVX2p2CncsmUH2hzsgJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.1.0/dist/chartjs-plugin-annotation.min.js"></script>
+  <script src="utils.js"></script>
+  <script src="prayerAnalytics.js"></script> <!-- Your script should be LAST -->
+  <script src="app.js"></script>
+</body>
+
+</html>

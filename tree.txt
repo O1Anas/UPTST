@@ -1,0 +1,18 @@
+Folder PATH listing
+Volume serial number is E432-378C
+C:.
+³   app.js
+³   chart.js
+³   icon.png
+³   index.html
+³   logs.log
+³   prayerAnalytics.js
+³   styles.css
+³   tree.txt
+³   utils.js
+³   
+ÀÄÄÄData
+        api response.json
+        stats.json
+        timings response.json
+        

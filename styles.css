@@ -1,0 +1,644 @@
+/* ========== Global Reset & Base ========== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  width: 100%;
+  margin: 0 auto;
+  overflow-x: hidden;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  margin: 0 auto;
+  background: #000000;
+  color: #ffffff;
+  line-height: 1.2;
+  overflow-x: hidden;
+}
+
+/* ========== Typography ========== */
+h1,
+h2,
+h3 {
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+h2 {
+  font-size: 1.125rem;
+  text-align: center;
+}
+
+h3 {
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.text-gray {
+  color: #aaa;
+  font-size: 0.7rem;
+}
+
+.time-detail {
+  font-size: 0.85em;
+  color: #aaa;
+  display: inline-block;
+  margin-top: 0.2rem;
+}
+
+/* ========== Containers & Layout ========== */
+.container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 0 10px;
+}
+
+.stats-column {
+  flex: 1;
+  max-width: 50%;
+  width: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-column {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  margin-left: auto;
+  align-items: center;
+}
+
+.chart-container {
+  height: 450px;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  margin-bottom: 20px;
+  background-color: #000000;
+  padding-bottom: 10px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.chart-wrapper {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* ========== Header ========== */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  position: relative;
+  gap: 0.25rem;
+  margin: .25rem auto;
+  flex-wrap: wrap;
+}
+
+.header h1 {
+  text-align: center;
+  margin: 0;
+}
+
+.header-icon {
+  height: 2rem;
+  width: auto;
+}
+
+/* ========== Sections & Rows ========== */
+
+.controls-container {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  row-gap: 0.25rem;
+  column-gap: 0.25rem;
+  margin-bottom: 0.25rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.address-row,
+.coords-row,
+.year-to-calc-row,
+.year-row,
+.method-calc-row {
+  display: flex;
+  align-self: center;
+  align-items: center;
+  gap: 0.25rem;
+  flex-wrap: nowrap;
+}
+
+.controls-container label,
+.coords-container label {
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+/* Make inputs flexible */
+/* .controls-container input[type="text"],
+.controls-container input[type="number"],
+.controls-container select {
+  flex: 1;
+} */
+/*
+select {
+  max-width: fit-content;
+} */
+
+.address-container,
+.address-row,
+input[type="text"]#address {
+  flex: 1 1 auto;
+  width: 25rem;
+  max-width: 100%;
+}
+
+.coords-row,
+input[type="number"]#latitude,
+input[type="number"]#longitude {
+  flex: 0 1 auto;
+}
+
+.year-to-calc-row,
+.year-row,
+input[type="number"]#year,
+.select-year,
+.method-calc-row,
+.select-method {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+/* ========== Location UI ========== */
+
+/* ========== addrss & its suggestions ========== */
+.address-suggestions,
+.location-dropdown {
+  width: 100%;
+  max-width: calc(100% - 20px);
+  display: none;
+  position: fixed;
+  height: auto;
+  max-height: none !important;
+  overflow: visible !important;
+  background-color: #000000;
+  border: 1px solid #333;
+  border-radius: 0.4rem;
+  z-index: 9999;
+  margin-top: 2px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+.address-suggestions.show,
+.location-dropdown.show {
+  display: block;
+  overflow: visible;
+}
+
+.suggestion-item,
+.location-item {
+  padding: 6px 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  border-bottom: 1px solid #333;
+  white-space: normal;
+  text-align: left;
+  line-height: 1.3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active,
+.location-item:hover {
+  background-color: #222;
+}
+
+.suggestion-item:last-child,
+.location-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-text {
+  flex-grow: 1;
+}
+
+.suggestion-coords {
+  color: #aaa;
+  font-size: 0.7rem;
+  white-space: nowrap;
+  background-color: #222;
+  padding: 2px 4px;
+  border-radius: 3px;
+  text-align: right;
+}
+
+/* ========== Forms & Inputs ========== */
+input[type="number"],
+input[type="text"],
+select {
+  height: 2rem;
+  border: 1px solid #333;
+  border-radius: 0.4rem;
+  font-size: 0.75rem;
+  text-align: center;
+  background-color: #111;
+  color: #ffffff;
+}
+
+.select-method, .year-row, .select-year {
+  min-width: fit-content;
+}
+
+/* Add these styles to your existing CSS */
+.calc-btn svg {
+  margin-right: 4px;
+  flex-shrink: 0;
+  /* Prevent the SVG from shrinking */
+}
+
+.calc-btn span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* For small screens, hide the text but keep the icon */
+@media (max-width: 500px) {
+  .calc-btn span {
+    display: none;
+  }
+
+  .calc-btn svg {
+    margin-right: 0;
+    /* Remove margin when text is hidden */
+  }
+}
+
+/* input[type="number"]#latitude,
+input[type="number"]#longitude,
+input[type="number"]#year {
+  min-width: fit-content;
+  max-width: 100%;
+} */
+
+/* input[type="number"]#year, .select-year {
+  width: fit-content;
+} */
+
+/* input[type="number"]#select {
+  width: clamp(fit-content, fit-content, 100%);
+} */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input::placeholder {
+  color: #666;
+}
+
+/* ========== Buttons ========== */
+.tab-btn,
+.gps-btn,
+.download-btn,
+.calc-btn {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.5rem;
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  color: #fff;
+}
+
+.tab-btn {
+  flex: 1;
+  justify-content: center;
+  border-radius: 0;
+  font-size: 1rem;
+  padding: 0.2rem 0.5rem;
+  font-weight: bold;
+  background-color: #333;
+}
+
+.gps-btn {
+  background: #eb2525;
+}
+
+.download-btn {
+  background: #16a34a;
+  position: absolute;
+  right: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease-in-out, visibility 0.3s;
+}
+
+.download-btn.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.calc-btn, .tab-btn.active {
+  background: #2563eb;
+  min-width: fit-content;
+}
+
+.gps-btn:hover,
+.download-btn:hover,
+.calc-btn:hover {
+  opacity: 0.8;
+}
+
+.gps-btn:disabled,
+.download-btn:disabled,
+.calc-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ========== Tables & chart ========== */
+.content-wrapper {
+  display: flex;
+  gap: 0.25rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.data-table {
+  width: max-content;
+  max-width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  table-layout: fixed;
+  margin: 0 auto;
+}
+
+/* Ensure tabs container and table have the same width */
+.tab-content {
+  display: flex;
+  justify-content: center;
+}
+
+.data-table th,
+.data-table td {
+  border: 1px solid #333;
+  padding: 0.25rem;
+  text-align: center;
+  color: #ffffff;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+}
+
+/* ========== Tabs ========== */
+.content-wrapper,
+.controls-container,
+.chart-container,
+.tabs-container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.tabs-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  border: 1px solid #333;
+  border-bottom: none;
+  box-sizing: border-box;
+}
+
+.tab-content {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== Tooltip ========== */
+.tooltip {
+  position: relative;
+  cursor: help;
+  color: #ffffff;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  width: 200px;
+  background-color: #03822d;
+  border: 1px solid white;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 9999;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-weight: normal;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  pointer-events: none;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Specific rule for table header tooltips */
+.data-table th.tooltip {
+  position: relative;
+}
+
+.data-table th.tooltip .tooltip-text {
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  margin-left: 0;
+}
+
+/* Add tooltip arrow */
+.tooltip .tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: calc(100% - 5px);
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  background-color: #03822d;
+  transform: rotate(45deg);
+  z-index: 1;
+}
+
+.tooltip .tooltip-text::before {
+  display: none;
+}
+
+/* ========== Error & States ========== */
+.error-container {
+  background: #300;
+  border: 1px solid #ef4444;
+  color: #ff9999;
+  padding: 0.4rem;
+  border-radius: 0.4rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.hidden {
+  visibility: hidden;
+  position: absolute;
+}
+
+.year-to-calc-row,
+.year-row,
+.method-calc-row,
+.coords-row,
+input[type="number"]#latitude,
+input[type="number"]#longitude,
+.address-container,
+.address-row,
+input[type="text"]#address {
+  max-width: 100%;
+  overflow: hidden;
+  display: flex;
+  /* flex-grow: 1; */
+  /* flex-shrink: 1; */
+  /* flex-basis: auto; */
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+  html, body {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+  }
+
+  .container {
+    padding: 0 5px;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  .coords-row,
+  input[type="number"]#latitude,
+  input[type="number"]#longitude {
+    flex: 1 1 auto;
+  }
+
+  .content-wrapper {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .stats-column,
+  .chart-column {
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+  }
+
+  .data-table {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .tabs-container,
+  .tabs,
+  .tab-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Ensure all inputs and selects fit within container */
+  input, select, button {
+    max-width: 100%;
+  }
+
+  .select-method {
+    flex: 1 2 auto;
+  }
+
+  .address-container,
+  .address-row,
+  input[type="text"]#address {
+    width: 100%;
+  }
+
+  .address-suggestions,
+  .location-dropdown {
+    max-width: calc(100% - 10px);
+  }
+
+
+}
