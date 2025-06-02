@@ -13,16 +13,6 @@ A web-based tool for analyzing and visualizing prayer times data across differen
 - GPS location support
 - Export statistics to JSON
 
-## Getting Started
-
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/UPTST.git
-cd UPTST
-```
-
-2. Open `index.html` in your web browser
-
 ## Usage
 
 1. Enter a location by:
@@ -39,6 +29,16 @@ cd UPTST
 5. View the interactive chart and statistics tables
 
 6. Optionally download the statistics as JSON
+
+## Getting Started
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/UPTST.git
+cd UPTST
+```
+
+2. Open `index.html` in your web browser
 
 ## API Integration
 
